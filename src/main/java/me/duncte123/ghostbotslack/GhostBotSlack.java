@@ -18,10 +18,40 @@
 
 package me.duncte123.ghostbotslack;
 
+import com.ullink.slack.simpleslackapi.SlackSession;
+import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory;
+import me.duncte123.ghostbotslack.listeners.MessageListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
 public class GhostBotSlack {
 
+    private static final Logger logger = LoggerFactory.getLogger(GhostBotSlack.class);
+
+    private GhostBotSlack() {
+        String token = "";
+
+
+        SlackSession session = SlackSessionFactory
+            .getSlackSessionBuilder(token)
+            .withAutoreconnectOnDisconnection(true)
+            .build();
+
+        MessageListener listener = new MessageListener();
+
+        session.addMessagePostedListener(listener);
+
+        try {
+            session.connect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-        //TODO: port GhostBot
+        new GhostBotSlack();
     }
 
 }

@@ -39,5 +39,6 @@ repositories {
 }
 
 dependencies {
-    //
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    implementation group: 'com.github.Ullink', name: 'simple-slack-api', version: '1.2.0'
 }
